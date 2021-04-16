@@ -133,10 +133,11 @@ function Game_Truc_xanh(){
             if(imagesArr[imageIndex1].src === imagesArr[imageIndex2].src){
                 correctCount++;
                 console.log(correctCount)
-                if(correctCount === 10){
-                    gameOver();
-                }
+                
                 setTimeout(function(){
+                    if(correctCount === 10){
+                        gameOver();
+                    }
                     imagesArr[imageIndex1].style.visibility = "hidden";
                     imagesArr[imageIndex2].style.visibility = "hidden";
                     txt_Num.innerHTML = Number(txt_Num.innerHTML) + 10;
