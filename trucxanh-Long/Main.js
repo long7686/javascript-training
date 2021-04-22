@@ -16,7 +16,7 @@ document.body.appendChild(game.elm);
 document.body.appendChild(menuStart.elm);
 document.body.appendChild(menuOption.elm);
 
-themeMusic.elm.play()
+themeMusic.elm.autoplay = true;
 themeMusic.elm.loop = true;
 menuStart._init();
 menuOption._init();
