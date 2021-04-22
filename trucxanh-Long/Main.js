@@ -52,9 +52,9 @@ export function ResumeGame(){
     game.clickSound.elm.play();
     menuStart.active = false;
     game.active = true;
-    if (game.cardSuff.elm.muted){
-        game.cardSuff.elm.muted = false
-    }
+    // if (game.cardSuff.elm.muted){
+    //     game.cardSuff.elm.muted = false
+    // }
 }
 
 
@@ -68,7 +68,7 @@ export function BackGame(){
     menuStart.active = true;
     menuOption.active = false;
     game.active = false;
-    game.cardSuff.elm.muted = true;
+    // game.cardSuff.elm.muted = true;
 }
 
 export function OptionGame(){
@@ -89,13 +89,14 @@ export function resetGame(){
         game.elm.removeChild(game.elm.firstChild);
     }
     game._init();
-    if ( game.cardSuff.elm.playing){
-        game.cardSuff.elm.currentTime = 0;
-        game.cardSuff.elm.play();
-        setTimeout(function(game){
-            game.cardSuff.elm.load();
-            },4000,game)
-    }
+    game.clickSound.elm.play();
+    // if ( game.cardSuff.elm.playing){
+    //     game.cardSuff.elm.currentTime = 0;
+    //     game.cardSuff.elm.play();
+    //     setTimeout(function(game){
+    //         game.cardSuff.elm.load();
+    //         },4000,game)
+    // }
    
 }
 

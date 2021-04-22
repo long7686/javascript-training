@@ -41,9 +41,9 @@ export class Game extends Node {
         this.clickSound = click;
         this.addChild(click);
 
-        var cardSuffer = new Audio("./Audio/Dealingcards.mp3");
-        this.cardSuff = cardSuffer;
-        this.addChild(cardSuffer);
+        // var cardSuffer = new Audio("./Audio/Dealingcards.mp3");
+        // this.cardSuff = cardSuffer;
+        // this.addChild(cardSuffer);
 
         var corr = new Audio("./Audio/Correct.mp3");
         this.Correct = corr;
@@ -149,7 +149,7 @@ export class Game extends Node {
         }
         for (let i = 0; i < row; i++){  
             for (let j = 0; j < col; j++){
-                this.cardSuff.elm.play()
+                //this.cardSuff.elm.play()
                 card.y = i * (card.hei +100) + padY;
                 card.x = j * card.wid + padX;
                 timeline.to(this.cardList[index-1], 0.2, {
@@ -160,9 +160,9 @@ export class Game extends Node {
                
             }
         }    
-        setTimeout(function(game){
-            game.cardSuff.elm.load();
-            },4000,this)
+        // setTimeout(function(game){
+        //     game.cardSuff.elm.load();
+        //     },4000,this)
     }
     
     onClickCard(event){
@@ -185,11 +185,9 @@ export class Game extends Node {
                     if(this.arrCheckImage[0].elm.src === this.arrCheckImage[1].elm.src){
                         this.arrCheckImage[0].elm.style.zIndex = "1";
                         this.arrCheckImage[1].elm.style.zIndex = "1";
-                        timeline.to(this.arrCheckImage, 0.7, {scaleX:2, hei:150, opacity: 0.5});
-                        this.Correct.elm.load()
-                        this.Correct.elm.play()
+                        timeline.to(this.arrCheckImage, 0.7, {scaleX:2, hei:150, opacity: 0.5}); 
                         this.winList.push(this.arrCheckImage[0].elm.src,this.arrCheckImage[0].elm.src);
-                        
+            
                         if (this.winList.length === 20){
                             setTimeout(function(game){
                                 game._score.elm.innerHTML = Number(game._score.elm.innerHTML) + 10;
@@ -203,6 +201,8 @@ export class Game extends Node {
                             game.arrCheckCover = [];
                             game.arrCheckImage = [];
                             game.countClick = 0; 
+                            game.Correct.elm.load()
+                            game.Correct.elm.play()
                         },1500, this);
                     }
                     else{
@@ -215,14 +215,13 @@ export class Game extends Node {
                             setTimeout(function(game){ 
                                 game._score.elm.innerHTML = Number(game._score.elm.innerHTML) - 10;
                                 game._loseLabel.active = true;
-                                
-                            },1600, this);
+                            },1500, this);
                         }
                         else{ 
                             setTimeout(function(game){ 
                                 game._score.elm.innerHTML = Number(game._score.elm.innerHTML) - 10;
                                 game.countClick = 0;
-                            },1600, this);
+                            },1500, this);
                         }
                     }      
                 }
