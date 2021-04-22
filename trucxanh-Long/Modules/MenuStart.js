@@ -1,6 +1,5 @@
 import {Node} from "../Libs/InitNode.js"
 import {Button} from "../Libs/InitButton.js"
-import {Label} from "../Libs/InitLabel.js"
 import {StartGame} from "../Main.js"
 import {ExitGame} from "../Main.js"
 import {OptionGame} from "../Main.js"
@@ -24,6 +23,12 @@ export class MenuStart extends Node{
         bnt_Start.on("mousedown",  () => StartGame());
         this.addChild(bnt_Start)
 
+        var bnt_Continous = new Button("Resume", "./img/buttonImage3.png");
+        bnt_Continous._init();
+        bnt_Continous.positionX = 300;
+        bnt_Continous.positionY = 160;
+        this.addChild(bnt_Continous)
+
         var bnt_Option = new Button("Option", "./img/buttonImage.png");
         bnt_Option._init();
         bnt_Option.positionX = 300;
@@ -42,21 +47,19 @@ export class MenuStart extends Node{
         bnt_exit.on("mousedown", () => ExitGame());
         this.addChild(bnt_exit)
     }
+    
 
-    _initResume(){
+    Continous(){
         var bnt_Continous = new Button("Resume", "./img/buttonImage.png");
         bnt_Continous._init();
-        bnt_Continous.positionX = 300;
-        bnt_Continous.positionY = 160;
         bnt_Continous.on("mouseenter", () => bnt_Continous.onMouse())
         bnt_Continous.on("mouseleave", () => bnt_Continous.offMouse())
         bnt_Continous.on("mousedown",  () => ResumeGame());
+        bnt_Continous.positionX = 300;
+        bnt_Continous.positionY = 160;
         this.addChild(bnt_Continous)
+        bnt_Continous.on("mouseenter", () => bnt_Continous.onMouse())
+        bnt_Continous.on("mouseleave", () => bnt_Continous.offMouse())
+        bnt_Continous.on("mousedown",  () => ResumeGame());
     }
-
-
-
-
-
-
 }

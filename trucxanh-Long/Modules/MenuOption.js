@@ -3,7 +3,6 @@ import {Label} from "../Libs/InitLabel.js"
 import {Button} from "../Libs/InitButton.js"
 import {BackGame} from "../Main.js"
 
-
 export class Option extends Node {
     constructor(){
         super();
@@ -12,6 +11,7 @@ export class Option extends Node {
     _init(){
         this._initLabel()
         this._initButton()
+        
     }
 
     _initLabel(){
