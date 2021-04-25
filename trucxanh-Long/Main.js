@@ -56,7 +56,19 @@ export function ResumeGame(){
 
 
 export function ExitGame(){
-    window.close()
+    if (confirm("Do you want to exit")){
+        game.active = false;
+        menuOption.active = false;
+        menuStart.active = false;
+        bg.active = false;
+        themeMusic.elm.pause();
+    }
+    else {
+        game.active = false;
+        menuOption.active = false;
+        menuStart.active = true;
+          
+    }
 }
 
 export function BackGame(){
