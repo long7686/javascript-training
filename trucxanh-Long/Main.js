@@ -38,6 +38,8 @@ export function StartGame(){
     }
     else{
         if (confirm("Do you want to start New Game")){
+            themeMusic.elm.muted = true
+            themeMusic.elm.muted = false
             resetGame()
         }
         else {
