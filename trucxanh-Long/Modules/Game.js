@@ -6,6 +6,7 @@ import {Button} from "../Libs/InitButton.js"
 import {BackGame} from "../Main.js"
 import {resetGame} from "../Main.js"
 import {Audio} from "../Libs/InitAudio.js"
+import {Animation} from "../Libs/InitAnimation.js"
 export class Game extends Node {
     constructor(){
         super();
@@ -65,7 +66,7 @@ export class Game extends Node {
         winLabel.y =200;
         winLabel.x = 250;
         loseLabel.y =200;
-        loseLabel.x = 80;
+        loseLabel.x = 50;
         this._score = score;
         this._winLabel = winLabel;
         this._loseLabel = loseLabel;
@@ -98,7 +99,7 @@ export class Game extends Node {
     }
 
     _initImages(){
-        let timeline = gsap.timeline();
+        let tl = new Animation();
         let arrImage = [];
         let col = 5;
         let row = 4;
@@ -115,7 +116,7 @@ export class Game extends Node {
         for (let i = 0; i < row; i++){
             for (let j = 0; j < col; j++){
                 var image = new Sprite(arrImage[index]);
-                timeline.to(image, {duration: 0, scaleX: 0});
+                tl.imageDown(image);
                 image.wid = 100;
                 image.hei = 100;
                 image.y = i * image.hei + padY;
@@ -134,11 +135,11 @@ export class Game extends Node {
         let padY = 40;
         let text = 20;
         let index = 20;
-        let timeline = gsap.timeline();
+        let tl = new Animation();
         for (let i = 0; i <= 19; i++){
             var card = new Card(text ,"./img/cover.jpg")
                 card.y = 180;
-                card.x = 65;
+                card.x = 450;
                 card._init();
                 card.wid = 100;
                 this.addChild(card);
@@ -147,26 +148,21 @@ export class Game extends Node {
                 card.on("mousedown", this.onClickCard.bind(this));
                 text--;
         }
+
         for (let i = 0; i < row; i++){  
             for (let j = 0; j < col; j++){
-                //this.cardSuff.elm.play()
                 card.y = i * (card.hei +100) + padY;
                 card.x = j * card.wid + padX;
-                timeline.to(this.cardList[index-1], 0.2, {
-                    x:card.x, 
-                    y:card.y, 
-                    pointEvent: "auto"});
-                index--
-               
+                tl.cardSufferAnimation(this.cardList[index-1], card);
+                //tl.cardSufferAnimation2(this.cardList[index-1], card);
+                index--   
             }
-        }    
-        // setTimeout(function(game){
-        //     game.cardSuff.elm.load();
-        //     },4000,this)
-    }
-    
+        }
+        //setTimeout(tl.cardSufferAnimation2(this.cardList[index-1], card),500)
+        
+    } 
     onClickCard(event){
-        let timeline = gsap.timeline();
+        let tl = new Animation();
         if (event){ 
             event.target.node.elm.style.pointerEvents = "none";
             setTimeout(function(){
@@ -175,8 +171,8 @@ export class Game extends Node {
             if (this.countClick < 2){
                 this.soundCard.elm.play()
                 let image = this.imageList[19-this.cardList.indexOf(event.target.node)];
-                timeline.to(event.target.node, {duration: 0.5, scaleX: 0});
-                timeline.to(image, {duration: 0.5, scaleX: 1});
+                tl.flipDown(event.target.node)
+                tl.flipUp(image)
                 this.arrCheckCover.push(event.target.node);
                 this.arrCheckImage.push(image);
                 this.countClick++;
@@ -185,7 +181,7 @@ export class Game extends Node {
                     if(this.arrCheckImage[0].elm.src === this.arrCheckImage[1].elm.src){
                         this.arrCheckImage[0].elm.style.zIndex = "1";
                         this.arrCheckImage[1].elm.style.zIndex = "1";
-                        timeline.to(this.arrCheckImage, 0.7, {scaleX:2, hei:150, opacity: 0.5}); 
+                        tl.cardCorrect(this.arrCheckImage)
                         this.winList.push(this.arrCheckImage[0].elm.src,this.arrCheckImage[0].elm.src);
             
                         if (this.winList.length === 20){
@@ -196,18 +192,21 @@ export class Game extends Node {
                         }
                         setTimeout(function(game){
                             game._score.elm.innerHTML = Number(game._score.elm.innerHTML) + 10;
-                            game.arrCheckImage[0].active = false;
-                            game.arrCheckImage[1].active = false;
-                            game.arrCheckCover = [];
-                            game.arrCheckImage = [];
-                            game.countClick = 0; 
-                            game.Correct.elm.load()
-                            game.Correct.elm.play()
+                            if ((game.arrCheckImage[0] != null) || (game.arrCheckImage[1] != null)){
+                                game.arrCheckImage[0].active = false;
+                                game.arrCheckImage[1].active = false;
+                                game.arrCheckCover = [];
+                                game.arrCheckImage = [];
+                                game.countClick = 0; 
+                                game.Correct.elm.load()
+                                game.Correct.elm.play()
+                            }
+                            
                         },1500, this);
                     }
                     else{
-                        timeline.to(this.arrCheckImage, {duration: 0.5, scaleX: 0});
-                        timeline.to(this.arrCheckCover, {duration: 0.5, scaleX: 1});
+                        tl.flipDown(this.arrCheckImage)
+                        tl.flipUp(this.arrCheckCover)
                         this.arrCheckCover = [];
                         this.arrCheckImage = [];
                         

@@ -8,6 +8,8 @@ export class Button extends Node {
         this.path;
         this.posX;
         this.posY;
+        this._bntWid;
+        this._bntHei;
         if (text)  this.text = text;
         if (path)  this.path = path;
     }
@@ -27,6 +29,22 @@ export class Button extends Node {
     set positionY(value){
         this.posY = value;
         this.y = this.posY;
+    }
+
+    get bntWid(){
+        return this._bntWid;
+    }
+    set bntWid(value){
+        this._bntWid = value;
+        this.wid = this._bntWid;
+    }
+
+    get bntHei(){
+        return this._bntHei;
+    }
+    set bntHei(value){
+        this._bntHei = value;
+        this.hei = this._bntHei;
     }
 
     _init(){

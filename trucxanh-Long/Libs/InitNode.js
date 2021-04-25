@@ -19,6 +19,12 @@ export class Node{
         this.elm.node = this;
     }
 
+    _initElementInput(){
+        this.elm = document.createElement('Input');
+        this.elm.style.position = 'absolute';
+        this.elm.node = this;
+    }
+
     get x(){
         return this._x;
     }

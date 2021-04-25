@@ -5,7 +5,7 @@ export class Card extends Node {
     constructor(text, path) {
         super();
         this.text;
-        this.path;
+        this._path;
         this._pointerEvent;
         if (text)  this.text = text;
         if (path)  this.path = path;
@@ -19,16 +19,24 @@ export class Card extends Node {
          this.elm.style.pointerEvents = this._pointerEvent;
      }
 
+     get path(){
+        return this._path;
+     }
+     set path(value){
+        this._path = value;
+        this.elm.src = this._path;
+     }
+
     _init(){
         this._initCover();
         this._initlabel();
     }
 
     _initCover(){
-        var cover = new Sprite(this.path)
+        var cover = new Sprite(this._path)
         cover.wid = 100;
         cover.hei = 100;
-        cover.src = this.path;
+        cover.src = this._path;
         cover.elm.node = this;
         this.addChild(cover);      
     }
@@ -40,4 +48,5 @@ export class Card extends Node {
         label.y = 30;
         this.addChild(label);
     }
+    
 }
