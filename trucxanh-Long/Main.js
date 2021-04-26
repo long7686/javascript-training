@@ -14,6 +14,7 @@ var themeMusic = new Audio("./Audio/theme.mp3")
 
 themeMusic.elm.muted = true
 themeMusic.elm.muted = false
+themeMusic.elm.play()
 themeMusic.elm.loop = true
 document.body.appendChild(themeMusic.elm)
 document.body.appendChild(bg.elm);
