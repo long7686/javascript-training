@@ -169,8 +169,8 @@ export class Game extends Node {
                 
                 if(this.arrCheckImage.length == 2){
                     if(this.arrCheckImage[0].elm.src === this.arrCheckImage[1].elm.src){
-                        this.arrCheckImage[0].elm.style.zIndex = "1";
-                        this.arrCheckImage[1].elm.style.zIndex = "1";
+                        this.arrCheckImage[0].elm.style.zIndex = "30";
+                        this.arrCheckImage[1].elm.style.zIndex = "30";
                         tl.cardCorrect(this.arrCheckImage)
                         this.winList.push(this.arrCheckImage[0].elm.src,this.arrCheckImage[0].elm.src);
             
