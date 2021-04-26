@@ -52,7 +52,7 @@ export class Option extends Node {
         sliderMusic.x = 240
         sliderMusic.y = 180
         sliderMusic.wid = 300
-        sliderMusic.elm.defaultValue = 50;
+        sliderMusic.elm.defaultValue = 0;
         sliderMusic.on("input", () => changeVolume(sliderMusic.elm.value))
         this.addChild(sliderMusic)
     }

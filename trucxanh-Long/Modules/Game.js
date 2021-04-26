@@ -1,5 +1,5 @@
 import {Node} from "../Libs/InitNode.js";
-import {Sprite} from "../Libs/InitSprite.js"
+import {Sprite} from "../Libs/InitSprite.js";
 import {Card} from "./Card.js";
 import {Label} from "../Libs/InitLabel.js"
 import {Button} from "../Libs/InitButton.js"
@@ -21,7 +21,6 @@ export class Game extends Node {
         this._loseLabel;
         this.soundCard;
         this.clickSound;
-        this.cardSuff;
         this.Correct;
     }
 
@@ -34,21 +33,14 @@ export class Game extends Node {
     }
 
     _initAudio(){
-        var card = new Audio("./Audio/CardSuffer.mp3");
-        this.soundCard = card;
-        this.addChild(card);
+        var cardFlip = new Audio("./Audio/CardFlip.mp3");
+        this.soundCard = cardFlip;
 
         var click = new Audio("./Audio/Click.mp3");
         this.clickSound = click;
-        this.addChild(click);
-
-        // var cardSuffer = new Audio("./Audio/Dealingcards.mp3");
-        // this.cardSuff = cardSuffer;
-        // this.addChild(cardSuffer);
 
         var corr = new Audio("./Audio/Correct.mp3");
         this.Correct = corr;
-        this.addChild(corr);
         
     }
 
@@ -133,34 +125,32 @@ export class Game extends Node {
         let row = 4;
         let padX = 250;
         let padY = 40;
-        let text = 20;
-        let index = 20;
-        let tl = new Animation();
-        for (let i = 0; i <= 19; i++){
+        let text = 1;
+        let index = -1;
+        for (let i = 1; i < 21; i++){
             var card = new Card(text ,"./img/cover.jpg")
-                card.y = 180;
-                card.x = 450;
                 card._init();
+                card.elm.style.zIndex = 20 - text;
                 card.wid = 100;
                 this.addChild(card);
                 this.cardList =  this.cardList.concat(card);
                 card.elm.style.pointerEvents = "none";
                 card.on("mousedown", this.onClickCard.bind(this));
-                text--;
+                card.on("mouseenter", card.onMouseIn.bind(card));
+                card.on("mouseleave", card.onMouseOut.bind(card));
+                text++;
         }
-
         for (let i = 0; i < row; i++){  
             for (let j = 0; j < col; j++){
+                index++ ;
+                let tl = new Animation()
                 card.y = i * (card.hei +100) + padY;
                 card.x = j * card.wid + padX;
-                tl.cardSufferAnimation(this.cardList[index-1], card);
-                //tl.cardSufferAnimation2(this.cardList[index-1], card);
-                index--   
+                tl.cardSufferAnimation(this.cardList[index], card,index);
             }
-        }
-        //setTimeout(tl.cardSufferAnimation2(this.cardList[index-1], card),500)
-        
+        }      
     } 
+    
     onClickCard(event){
         let tl = new Animation();
         if (event){ 
@@ -170,7 +160,7 @@ export class Game extends Node {
             },500);    
             if (this.countClick < 2){
                 this.soundCard.elm.play()
-                let image = this.imageList[19-this.cardList.indexOf(event.target.node)];
+                let image = this.imageList[this.cardList.indexOf(event.target.node)];
                 tl.flipDown(event.target.node)
                 tl.flipUp(image)
                 this.arrCheckCover.push(event.target.node);
@@ -186,12 +176,12 @@ export class Game extends Node {
             
                         if (this.winList.length === 20){
                             setTimeout(function(game){
-                                game._score.elm.innerHTML = Number(game._score.elm.innerHTML) + 10;
+                                tl.scoreChange(game, 10);
                                 game._winLabel.active = true;
                             },1500, this); 
                         }
                         setTimeout(function(game){
-                            game._score.elm.innerHTML = Number(game._score.elm.innerHTML) + 10;
+                            tl.scoreChange(game, 10);
                             if ((game.arrCheckImage[0] != null) || (game.arrCheckImage[1] != null)){
                                 game.arrCheckImage[0].active = false;
                                 game.arrCheckImage[1].active = false;
@@ -210,15 +200,15 @@ export class Game extends Node {
                         this.arrCheckCover = [];
                         this.arrCheckImage = [];
                         
-                        if(this._score.elm.innerHTML == 10){
+                        if(this._score.elm.innerHTML <= 10){
                             setTimeout(function(game){ 
-                                game._score.elm.innerHTML = Number(game._score.elm.innerHTML) - 10;
+                                tl.scoreChange(game, -10);
                                 game._loseLabel.active = true;
                             },1500, this);
                         }
                         else{ 
                             setTimeout(function(game){ 
-                                game._score.elm.innerHTML = Number(game._score.elm.innerHTML) - 10;
+                                tl.scoreChange(game, -10);
                                 game.countClick = 0;
                             },1500, this);
                         }

@@ -48,5 +48,15 @@ export class Card extends Node {
         label.y = 30;
         this.addChild(label);
     }
+
+    onMouseIn(){
+        this.path = "./img/cover2.jpg"
+        this._init()
+    }
+
+    onMouseOut(){
+        this.path = "./img/cover.jpg"
+        this._init()
+    }
     
 }
